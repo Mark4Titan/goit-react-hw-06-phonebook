@@ -27,10 +27,11 @@ export class RenderPhonebook extends Component {
     const nevContacts = JSON.parse(localStorage.getItem('contacts'));
 
     this.setState({
-      contacts:
-        nevContacts !== null && nevContacts.length > 0
-          ? nevContacts
-          : this.lindenNumbers(),
+      contacts: nevContacts,
+      // чомусь gh-pages не працює із такою умовою(((
+      // nevContacts !== null && nevContacts.length > 0
+      //   ? nevContacts
+      //   : this.lindenNumbers(),
     });
   }
 
