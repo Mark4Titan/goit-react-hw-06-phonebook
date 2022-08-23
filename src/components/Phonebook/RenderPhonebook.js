@@ -23,24 +23,20 @@ export class RenderPhonebook extends Component {
 
   // add contact //
 
-  // componentDidMount() {
-  //   // const nevContacts = JSON.parse(localStorage.getItem('contacts'));
-  //   console.log(localStorage.getItem('contacts'));
-    
+  componentDidMount() {
+    const nevContacts = JSON.parse(localStorage.getItem('contacts'));
 
-  //   // this.setState({
-  //   //   contacts: nevContacts,
-  //   //   // чомусь gh-pages не працює із такою умовою(((
-  //   //   // nevContacts !== null && nevContacts.length > 0
-  //   //   //   ? nevContacts
-  //   //   //   : this.lindenNumbers(),
-  //   // });
-  // }
+    this.setState({
+      contacts:
+        nevContacts !== null && nevContacts.length > 0
+          ? nevContacts
+          : this.lindenNumbers(),
+    });
+  }
 
-  // componentDidUpdate() {
-  //   // localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-  //   localStorage.setItem('contacts', this.state.contacts);
-  // }
+  componentDidUpdate() {
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  }
 
   updateEvent = evt => {
     evt.preventDefault();
