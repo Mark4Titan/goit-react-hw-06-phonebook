@@ -6,19 +6,37 @@ import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
 
-
 export class RenderPhonebook extends Component {
   state = {
-    contacts: [
+    contacts: [],
+    filter: '',
+  };
+
+  lindenNumbers = () => {
+    return [
       { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
       { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
-    filter: '',
+    ];
   };
 
   // add contact //
+
+  componentDidMount() {
+    const nevContacts = JSON.parse(localStorage.getItem('contacts'));
+
+    this.setState({
+      contacts:
+        nevContacts !== null && nevContacts.length > 0
+          ? nevContacts
+          : this.lindenNumbers(),
+    });
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  }
 
   updateEvent = evt => {
     evt.preventDefault();
@@ -64,10 +82,9 @@ export class RenderPhonebook extends Component {
     const arrFil = state.contacts.filter(contact =>
       contact.name.toLowerCase().includes(state.filter.toLowerCase())
     );
-    // arrFil.length === 0 && this.state.filter !== 0 && this.Сlean();// :((   
-    
-        return arrFil;
-   
+    // arrFil.length === 0 && this.state.filter !== 0 && this.Сlean();// :((
+
+    return arrFil;
   };
 
   inputFilter = evt => {
@@ -75,9 +92,9 @@ export class RenderPhonebook extends Component {
     this.setState({ filter: input });
   };
 
-  Сlean = (evt) => {
+  Сlean = evt => {
     this.setState({ filter: '' });
-  }
+  };
 
   render() {
     const { filter } = this.state;
@@ -106,7 +123,6 @@ export class RenderPhonebook extends Component {
 }
 
 export default RenderPhonebook;
-
 
 RenderPhonebook.propTypes = {
   contacts: PropTypes.arrayOf(PropTypes.object),
