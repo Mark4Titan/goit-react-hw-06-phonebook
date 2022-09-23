@@ -1,7 +1,33 @@
 import PropTypes from 'prop-types';
 import { Box } from 'components/Box';
+import { useDispatch } from 'react-redux';
+import { addContact } from 'redux/contactSlice';
 
-export const ContactForm = ({ updateEvent }) => {
+
+
+export const ContactForm = () => {
+  const dispatch = useDispatch();
+
+  // const auditEntry = namesAudit => {
+  //   return contacts.filter(
+  //     contact => contact.name.toLowerCase() === namesAudit.toLowerCase()
+  //   ).length > 0
+  //     ? window.alert(`${namesAudit} is already in contacts`)
+  //     : true;
+  // };
+
+  const updateEvent = evt => {
+    const name = evt.target[0].value;
+    const number = evt.target[1].value;
+
+    // if (auditEntry(name)) {
+      evt.preventDefault();
+      
+      dispatch(addContact({ name, number }));
+      evt.target.reset();
+    // }
+  };
+
   return (
     <Box p={4} m={3} border="1px solid" width="320px">
       <h2>Phonebook</h2>
