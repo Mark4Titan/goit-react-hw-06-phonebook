@@ -1,14 +1,24 @@
-import PropTypes from 'prop-types';
 import { Box } from 'components/Box';
+import { setStatusFilter, clearFilter } from 'redux/filtersSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
-export const Filter = ({ filter, inputFilter, Сlean }) => {
+export const Filter = () => {
+  const dispatch = useDispatch();
+
+  const Сlean = () => dispatch(clearFilter());
+
+  const filter = useSelector(state => state.filters.status);
+
+  const ContactsFilter = contact => dispatch(setStatusFilter(contact));
+
   return (
     <>
+      <h2>Contacts</h2>
       <input
         type="filter"
         placeholder="Find contacts by name"
         value={filter}
-        onChange={inputFilter}
+        onChange={evt => ContactsFilter(evt.currentTarget.value.trim())}
       />
       {filter && (
         <Box as="button" my={2} type="button" onClick={Сlean}>
@@ -20,9 +30,3 @@ export const Filter = ({ filter, inputFilter, Сlean }) => {
 };
 
 export default Filter;
-
-Filter.propTypes = {
-  filter: PropTypes.string,
-  inputFilter: PropTypes.func,
-  Сlean: PropTypes.func,
-};

@@ -1,31 +1,31 @@
 import PropTypes from 'prop-types';
 import { Box } from 'components/Box';
-import { useDispatch } from 'react-redux';
 import { addContact } from 'redux/contactSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
 export const ContactForm = () => {
   const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contact);
 
-  // const auditEntry = namesAudit => {
-  //   return contacts.filter(
-  //     contact => contact.name.toLowerCase() === namesAudit.toLowerCase()
-  //   ).length > 0
-  //     ? window.alert(`${namesAudit} is already in contacts`)
-  //     : true;
-  // };
+  const auditEntry = namesAudit => {
+    return contacts.filter(
+      contact => contact.name.toLowerCase() === namesAudit.toLowerCase()
+    ).length > 0
+      ? window.alert(`${namesAudit} is already in contacts`)
+      : true;
+  };
 
   const updateEvent = evt => {
+    evt.preventDefault();
     const name = evt.target[0].value;
-    const number = evt.target[1].value;
+    const number = evt.target[1].value;   
 
-    // if (auditEntry(name)) {
-      evt.preventDefault();
-      
+    if (auditEntry(name)) { 
       dispatch(addContact({ name, number }));
       evt.target.reset();
-    // }
+    }
   };
 
   return (
@@ -55,7 +55,7 @@ export const ContactForm = () => {
             required
           />
 
-          <Box as="button" my={5} type="submit">
+          <Box as="button" my={4} type="submit">
             Add contact
           </Box>
         </Box>
